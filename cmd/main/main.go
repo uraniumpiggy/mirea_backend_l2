@@ -7,10 +7,13 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", controller.HandleForm)
+	http.HandleFunc("/cmd", controller.HandleForm)
 	http.HandleFunc("/shape", controller.GetShape)
 	http.HandleFunc("/qsort", controller.GetSortedArray)
 
-	log.Fatal(http.ListenAndServe(":80", nil))
-
+	log.Printf("Server started")
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

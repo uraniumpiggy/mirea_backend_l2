@@ -26,10 +26,12 @@ func HandleForm(w http.ResponseWriter, r *http.Request) {
 	command := r.FormValue("command")
 	cmd := exec.Command("sh", "-c", command)
 	stdout, err := cmd.Output()
-	fmt.Println(err, stdout)
-
-	c := Command{Output: string(stdout)}
-
+	c := Command{}
+	if err != nil {
+		c.Output = err.Error()
+	} else {
+		c.Output = string(stdout)
+	}
 	tmpl.Execute(w, c)
 }
 
